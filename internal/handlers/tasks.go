@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"tasklist_REST_API/internal/model/db"
 	"time"
 
@@ -137,4 +138,13 @@ func GetAllTasks(writer http.ResponseWriter, request *http.Request) {
 		Data:      &tasks,
 	}
 	json.NewEncoder(writer).Encode(response)
+}
+
+// GET    /tags/<tagname>      :  возвращает список задач с заданным тегом
+func GetTasksByTags(writer http.ResponseWriter, request *http.Request) {
+	initHeaders(writer)
+	tagsStr := mux.Vars(request)["tags"]
+	tags := strings.Split(tagsStr, ",")
+
+	db.FindTasksByTags(tags...)
 }
