@@ -29,4 +29,5 @@ func (a *Api) configureRouterField() {
 	a.router.HandleFunc("/info", handlers.GetInfo).Methods("GET")
 	a.router.HandleFunc("/tasks", handlers.PostTasks).Methods("POST")
 	a.router.HandleFunc("/tasks"+"/{id}", handlers.GetTaskById).Methods("GET")
+	a.router.HandleFunc("/tasks", handlers.GetAllTasks).Methods("GET")
 }

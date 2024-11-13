@@ -104,12 +104,37 @@ func GetTaskById(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	writer.WriteHeader(http.StatusNotFound)
+	writer.WriteHeader(http.StatusOK)
 	response := ResponseModel[db.Task]{
 		IsSuccess: true,
 		Message:   "Task found successfully.",
 		Data:      &task,
 	}
 	json.NewEncoder(writer).Encode(response)
+}
 
+// GET    /tasks/              :  возвращает все задачи
+func GetAllTasks(writer http.ResponseWriter, request *http.Request) {
+	initHeaders(writer)
+
+	tasks, err := db.GetAllTasks()
+	if err != nil {
+		writer.WriteHeader(http.StatusInternalServerError)
+		response := ResponseModel[any]{
+			IsSuccess: false,
+			IsError:   true,
+			Message:   fmt.Sprintf("Fail getting tasks from database: %v", err.Error()),
+		}
+
+		json.NewEncoder(writer).Encode(response)
+		return
+	}
+
+	writer.WriteHeader(http.StatusOK)
+	response := ResponseModel[[]db.Task]{
+		IsSuccess: true,
+		Message:   "Tasks loading successfully.",
+		Data:      &tasks,
+	}
+	json.NewEncoder(writer).Encode(response)
 }
