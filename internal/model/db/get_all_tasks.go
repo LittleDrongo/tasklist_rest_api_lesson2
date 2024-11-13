@@ -36,11 +36,13 @@ func GetAllTasks() (tasks []Task, err error) {
 	for rows.Next() {
 		var task Task
 		var tags sql.NullString
-		var due sql.NullTime
+		var due sql.NullTime // Используют так как поддерживают пустые поля.
 
 		if err := rows.Scan(&task.id, &task.Text, &due, &tags); err != nil {
 			return nil, err
 		}
+
+		task.Due = due.Time
 
 		if tags.Valid {
 			task.Tags = strings.Split(tags.String, "; ")
@@ -108,6 +110,8 @@ func FindTasksByTags(tags ...string) (tasks []Task, err error) {
 		if err := rows.Scan(&task.id, &task.Text, &due, &tagString); err != nil {
 			return nil, fmt.Errorf("scan error: %v", err)
 		}
+
+		task.Due = due.Time
 
 		if tagString.String != "" {
 			task.Tags = strings.Split(tagString.String, ", ")

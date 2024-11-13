@@ -1,0 +1,194 @@
+{
+  "yaakVersion": "2024.11.5",
+  "yaakSchema": 2,
+  "timestamp": "2024-11-13T22:36:21.247780600",
+  "resources": {
+    "workspaces": [
+      {
+        "model": "workspace",
+        "id": "wk_t8ng972Mxa",
+        "createdAt": "2024-11-13T17:35:36",
+        "updatedAt": "2024-11-13T17:36:10",
+        "name": "tasklist",
+        "description": "",
+        "variables": [
+          {
+            "enabled": true,
+            "name": "HOST",
+            "value": "http://localhost"
+          },
+          {
+            "enabled": true,
+            "name": "PORT",
+            "value": ":8080"
+          },
+          {
+            "enabled": true,
+            "name": "",
+            "value": ""
+          }
+        ],
+        "settingValidateCertificates": true,
+        "settingFollowRedirects": true,
+        "settingRequestTimeout": 0
+      }
+    ],
+    "environments": [],
+    "folders": [],
+    "httpRequests": [
+      {
+        "model": "http_request",
+        "id": "rq_D7EjJy38jg",
+        "createdAt": "2024-11-13T22:06:03",
+        "updatedAt": "2024-11-13T22:32:06",
+        "workspaceId": "wk_t8ng972Mxa",
+        "folderId": null,
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "Get Tasks By Tags",
+        "sortPriority": 6000.0,
+        "url": "${[ HOST ]}${[ PORT ]}/tags/work,studdy",
+        "urlParameters": []
+      },
+      {
+        "model": "http_request",
+        "id": "rq_Vc5eVFI1nM",
+        "createdAt": "2024-11-13T21:45:47",
+        "updatedAt": "2024-11-13T21:45:59",
+        "workspaceId": "wk_t8ng972Mxa",
+        "folderId": null,
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "Get Task By (not found)",
+        "sortPriority": 5000.0,
+        "url": "${[ HOST ]}${[ PORT ]}/tasks/99999",
+        "urlParameters": []
+      },
+      {
+        "model": "http_request",
+        "id": "rq_BmzEYZfgMx",
+        "createdAt": "2024-11-13T21:45:32",
+        "updatedAt": "2024-11-13T21:45:44",
+        "workspaceId": "wk_t8ng972Mxa",
+        "folderId": null,
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "Get Task By (wrong)",
+        "sortPriority": 5000.0,
+        "url": "${[ HOST ]}${[ PORT ]}/tasks/dsdsfds",
+        "urlParameters": []
+      },
+      {
+        "model": "http_request",
+        "id": "rq_j6WtnmxgOB",
+        "createdAt": "2024-11-13T21:45:14",
+        "updatedAt": "2024-11-13T21:46:30",
+        "workspaceId": "wk_t8ng972Mxa",
+        "folderId": null,
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "GetAllTasks",
+        "sortPriority": 6000.0,
+        "url": "${[ HOST ]}${[ PORT ]}/tasks/",
+        "urlParameters": []
+      },
+      {
+        "model": "http_request",
+        "id": "rq_Xj66TRpOUu",
+        "createdAt": "2024-11-13T21:00:30",
+        "updatedAt": "2024-11-13T21:46:20",
+        "workspaceId": "wk_t8ng972Mxa",
+        "folderId": null,
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "Get Task By ID (ok)",
+        "sortPriority": 4000.0,
+        "url": "${[ HOST ]}${[ PORT ]}/tasks/1",
+        "urlParameters": []
+      },
+      {
+        "model": "http_request",
+        "id": "rq_YOWyhSCaYJ",
+        "createdAt": "2024-11-13T19:50:21",
+        "updatedAt": "2024-11-13T22:35:45",
+        "workspaceId": "wk_t8ng972Mxa",
+        "folderId": null,
+        "authentication": {},
+        "authenticationType": null,
+        "body": {
+          "text": "{\n    \"text\": \"We are ready to Go!\",\n    \"tags\": [\n      \"work\",\n      \"studdy\"\n    ],\n    \"deadline\": \"2028-11-15T22:50:28.984959136+03:00\"  \n  }"
+        },
+        "bodyType": "application/json",
+        "headers": [
+          {
+            "enabled": true,
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "name": "Post OK",
+        "sortPriority": 3000.0,
+        "url": "${[ HOST ]}${[ PORT ]}/tasks",
+        "urlParameters": []
+      },
+      {
+        "model": "http_request",
+        "id": "rq_TwPqmNbv3Z",
+        "createdAt": "2024-11-13T19:37:41",
+        "updatedAt": "2024-11-13T22:35:30",
+        "workspaceId": "wk_t8ng972Mxa",
+        "folderId": null,
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "POST",
+        "name": "Wrong POST",
+        "sortPriority": 2000.0,
+        "url": "${[ HOST ]}${[ PORT ]}/tasks",
+        "urlParameters": []
+      },
+      {
+        "model": "http_request",
+        "id": "rq_F763oSCpqD",
+        "createdAt": "2024-11-13T18:08:12",
+        "updatedAt": "2024-11-13T22:35:23",
+        "workspaceId": "wk_t8ng972Mxa",
+        "folderId": null,
+        "authentication": {},
+        "authenticationType": null,
+        "body": {},
+        "bodyType": null,
+        "headers": [],
+        "method": "GET",
+        "name": "Info",
+        "sortPriority": 0.0,
+        "url": "${[ HOST ]}${[ PORT ]}/info/",
+        "urlParameters": []
+      }
+    ],
+    "grpcRequests": []
+  }
+}
