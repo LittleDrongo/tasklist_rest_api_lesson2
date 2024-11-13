@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 )
 
@@ -19,5 +20,7 @@ GET		/due/<yy>/<mm>/<dd>  :  возвращает список задач, за�
 	`
 	writer.WriteHeader(http.StatusOK)
 	writer.Write([]byte(message))
-	// json.NewEncoder(writer).Encode(resp)
+	log.Println("started GetInfo method \n",
+		"user:", request.Header, "\n",
+		request.RemoteAddr)
 }
