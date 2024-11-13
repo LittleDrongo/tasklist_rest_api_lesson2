@@ -1,7 +1,9 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
+	"time"
 
 	_ "github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
@@ -15,7 +17,10 @@ GET		/tasks/              :  возвращает все задачи
 DELETE	/tasks/<taskid>      :  удаляет задачу по ID
 DELETE	/tasks/              :  удаляет все задачи
 GET		/tags/<tagname>      :  возвращает список задач с заданным тегом
-GET		/due/<yy>/<mm>/<dd>  :  возвращает список задач, запланированных на указанную дату`
+GET		/due/<yy>/<mm>/<dd>  :  возвращает список задач, запланированных на указанную дату
+
+Запущен: %s
+`
 
 func (a *api) configureLoggerField() error {
 	log_level, err := logrus.ParseLevel(a.config.LoggerLevel)
@@ -28,7 +33,10 @@ func (a *api) configureLoggerField() error {
 
 // Пытаемся отконфигурировать маршрутизатор (а конкретнее поле router API)
 func (a *api) configureRouterField() {
+
+	msg := fmt.Sprintf(startMessage, time.Now().Format("02-01-2006 15:04"))
+
 	a.router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(startMessage))
+		w.Write([]byte(msg))
 	})
 }

@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"log"
-	"tasklist_REST_API/src/internal/app/api"
+	"tasklist_REST_API/internal/app/api"
 
 	"github.com/BurntSushi/toml"
 )
