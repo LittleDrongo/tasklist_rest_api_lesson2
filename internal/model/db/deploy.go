@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	sqlDriver = "sqlite"
-	// dataBasePath = "data/db/tasklist.db"
+	sqlDriver    = "sqlite"
+	dataBasePath = "data/db/tasklist.db"
 )
 
 var (

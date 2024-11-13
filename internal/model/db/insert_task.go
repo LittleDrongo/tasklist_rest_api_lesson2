@@ -6,7 +6,7 @@ import (
 
 func InsertTask(t Task) (id int, err error) {
 
-	db, err := sql.Open(sqlDriver, "data/db/tasklist.db")
+	db, err := sql.Open(sqlDriver, dataBasePath)
 	if err != nil {
 		return -1, err
 	}
