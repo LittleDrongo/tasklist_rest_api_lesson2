@@ -30,8 +30,8 @@ func (a *api) Start() error {
 
 	a.logger.Info("starting api server at port:", (a.config.Host + a.config.Port))
 
-	a.configureRouterField()
 	a.router.StrictSlash(true)
+	a.configureRouterField()
 
 	return http.ListenAndServe(a.config.Port, a.router)
 }
