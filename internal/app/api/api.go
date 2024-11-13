@@ -1,6 +1,7 @@
 package api
 
 import (
+	"database/sql"
 	"net/http"
 	"tasklist_REST_API/internal/model/db"
 
@@ -8,21 +9,22 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type api struct {
+type Api struct {
 	config *config
 	logger *logrus.Logger
 	router *mux.Router
+	db     *sql.DB
 }
 
-func New(config *config) *api {
-	return &api{
+func New(config *config) *Api {
+	return &Api{
 		config: config,
 		logger: logrus.New(),
 		router: mux.NewRouter(),
 	}
 }
 
-func (a *api) Start() error {
+func (a *Api) Start() error {
 
 	err := a.configureLoggerField()
 	if err != nil {

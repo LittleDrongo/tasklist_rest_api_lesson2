@@ -14,6 +14,10 @@ const (
 	// dataBasePath = "data/db/tasklist.db"
 )
 
+var (
+	dataBaseConst *sql.DB
+)
+
 func DeployDB(dataBasePath string) error {
 
 	// os.Remove(dataBasePath) //?
@@ -48,7 +52,7 @@ func DeployDB(dataBasePath string) error {
 	CREATE TABLE IF NOT EXISTS tags (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		task_id INTEGER NOT NULL,
-		tag TEXT NOT NULL,
+		tag TEXT,
 		FOREIGN KEY (task_id) REFERENCES tasks (id) ON DELETE CASCADE
 	);`
 
@@ -58,6 +62,8 @@ func DeployDB(dataBasePath string) error {
 		}
 
 	}
+
+	dataBaseConst = db
 
 	return nil
 }

@@ -1,23 +1,32 @@
 package db
 
-import "database/sql"
+import (
+	"database/sql"
+)
 
-func InsertTask(db *sql.DB, t task) error {
+func InsertTask(t Task) (id int, err error) {
+
+	db, err := sql.Open(sqlDriver, "data/db/tasklist.db")
+	if err != nil {
+		return -1, err
+	}
+	defer db.Close()
 
 	lastId, err := insertIntoTasks(db, t)
 	if err != nil {
-		return err
+		return -1, err
 	}
 
 	err = insertIntoTags(lastId, db, t)
 	if err != nil {
-		return err
+		return -1, err
 	}
+	id = int(lastId)
 
-	return nil
+	return id, nil
 }
 
-func insertIntoTasks(db *sql.DB, t task) (lastId int64, err error) {
+func insertIntoTasks(db *sql.DB, t Task) (lastId int64, err error) {
 	insert := `
 	INSERT INTO tasks (text, due) VALUES (?, ?)
 	;
@@ -35,7 +44,7 @@ func insertIntoTasks(db *sql.DB, t task) (lastId int64, err error) {
 	return lastId, nil
 }
 
-func insertIntoTags(taskId int64, db *sql.DB, t task) error {
+func insertIntoTags(taskId int64, db *sql.DB, t Task) error {
 	insert := `
 		INSERT INTO tags (task_id, tag) VALUES (?, ?);
 		`

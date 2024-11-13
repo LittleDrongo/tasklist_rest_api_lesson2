@@ -10,7 +10,7 @@ import (
 
 const startMessage = `use /info`
 
-func (a *api) configureLoggerField() error {
+func (a *Api) configureLoggerField() error {
 	log_level, err := logrus.ParseLevel(a.config.LoggerLevel)
 	if err != nil {
 		return err
@@ -20,11 +20,12 @@ func (a *api) configureLoggerField() error {
 }
 
 // Пытаемся отконфигурировать маршрутизатор (а конкретнее поле router API)
-func (a *api) configureRouterField() {
+func (a *Api) configureRouterField() {
 
 	a.router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(startMessage))
 	})
 
 	a.router.HandleFunc("/info", handlers.GetInfo).Methods("GET")
+	a.router.HandleFunc("/tasks", handlers.PostTasks).Methods("POST")
 }

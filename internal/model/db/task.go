@@ -2,9 +2,9 @@ package db
 
 import "time"
 
-type task struct {
+type Task struct {
 	id   int
-	Text string
-	Tags []string
-	Due  time.Time // deadline date
+	Text string    `json:"text"`
+	Tags []string  `json:"tags"`
+	Due  time.Time `json:"deadline"` // deadline date
 }
