@@ -24,9 +24,9 @@ func PostTasks(writer http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		writer.WriteHeader(http.StatusBadRequest)
 		response := ResponseModel[int]{
-			Success: false,
-			Message: "provide json file is invalid, look at sample request model.",
-			Data:    nil,
+			IsSuccess: false,
+			Message:   "provide json file is invalid, look at sample request model.",
+			Data:      nil,
 			SampleRequestModel: &db.Task{
 				Text: "sample task text",
 				Tags: []string{"work", "bussines"},
@@ -42,9 +42,9 @@ func PostTasks(writer http.ResponseWriter, request *http.Request) {
 		writer.WriteHeader(http.StatusInternalServerError)
 
 		response := ResponseModel[int]{
-			Success: false,
-			Error:   true,
-			Message: err.Error(),
+			IsSuccess: false,
+			IsError:   true,
+			Message:   err.Error(),
 		}
 		json.NewEncoder(writer).Encode(response)
 		return
@@ -56,9 +56,9 @@ func PostTasks(writer http.ResponseWriter, request *http.Request) {
 
 	writer.WriteHeader(http.StatusOK) // 200 error
 	response := ResponseModel[taskId]{
-		Success: true,
-		Message: "Task added successfully",
-		Data:    &taskId{TaskId: id},
+		IsSuccess: true,
+		Message:   "Task added successfully",
+		Data:      &taskId{TaskId: id},
 	}
 	json.NewEncoder(writer).Encode(response)
 }
@@ -71,9 +71,9 @@ func GetTaskById(writer http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		writer.WriteHeader(http.StatusBadRequest)
 		response := ResponseModel[any]{
-			Success: false,
-			Error:   true,
-			Message: fmt.Sprintf("symbols expected [0-1], actual [%v], error occurs while parsing id field %v", idStr, err),
+			IsSuccess: false,
+			IsError:   true,
+			Message:   fmt.Sprintf("symbols expected [0-1], actual [%v], error occurs while parsing id field %v", idStr, err),
 		}
 
 		json.NewEncoder(writer).Encode(response)
@@ -84,9 +84,9 @@ func GetTaskById(writer http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		writer.WriteHeader(http.StatusInternalServerError)
 		response := ResponseModel[any]{
-			Success: false,
-			Error:   true,
-			Message: err.Error(),
+			IsSuccess: false,
+			IsError:   true,
+			Message:   err.Error(),
 		}
 
 		json.NewEncoder(writer).Encode(response)
@@ -96,8 +96,8 @@ func GetTaskById(writer http.ResponseWriter, request *http.Request) {
 	if !rowExists {
 		writer.WriteHeader(http.StatusNotFound)
 		response := ResponseModel[any]{
-			Success: false,
-			Message: "Task not found.",
+			IsSuccess: false,
+			Message:   "Task not found.",
 		}
 
 		json.NewEncoder(writer).Encode(response)
@@ -106,9 +106,9 @@ func GetTaskById(writer http.ResponseWriter, request *http.Request) {
 
 	writer.WriteHeader(http.StatusNotFound)
 	response := ResponseModel[db.Task]{
-		Success: true,
-		Message: "Task found successfully.",
-		Data:    &task,
+		IsSuccess: true,
+		Message:   "Task found successfully.",
+		Data:      &task,
 	}
 	json.NewEncoder(writer).Encode(response)
 
