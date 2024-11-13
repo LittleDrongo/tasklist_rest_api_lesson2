@@ -94,5 +94,33 @@ func FindTasksByTags(tags ...string) (tasks []Task, err error) {
 	}
 	defer db.Close()
 
-	return tasks, err
+	rows, err := db.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var task Task
+		var tagString sql.NullString
+		var due sql.NullTime
+
+		if err := rows.Scan(&task.id, &task.Text, &due, &tagString); err != nil {
+			return nil, fmt.Errorf("scan error: %v", err)
+		}
+
+		if tagString.String != "" {
+			task.Tags = strings.Split(tagString.String, ", ")
+		}
+
+		tasks = append(tasks, task)
+	}
+	defer rows.Close()
+
+	err = rows.Err()
+	if err != nil {
+		return nil, err
+	}
+
+	return tasks, nil
 }

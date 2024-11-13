@@ -146,5 +146,35 @@ func GetTasksByTags(writer http.ResponseWriter, request *http.Request) {
 	tagsStr := mux.Vars(request)["tags"]
 	tags := strings.Split(tagsStr, ",")
 
-	db.FindTasksByTags(tags...)
+	tasks, err := db.FindTasksByTags(tags...)
+	if err != nil {
+		writer.WriteHeader(http.StatusInternalServerError)
+		response := ResponseModel[any]{
+			IsSuccess: false,
+			IsError:   true,
+			Message:   fmt.Sprintf("Fail getting tasks from database: %v", err.Error()),
+		}
+
+		json.NewEncoder(writer).Encode(response)
+		return
+	}
+
+	if len(tasks) == 0 {
+		writer.WriteHeader(http.StatusNotFound)
+		response := ResponseModel[any]{ //? Нужна ли такая проверка или пустой возврат списка тоже 200-й код?
+			IsSuccess: true,
+			Message:   fmt.Sprintf("Tasks with tags [%v] not found in database", tagsStr),
+		}
+
+		json.NewEncoder(writer).Encode(response)
+		return
+	}
+
+	writer.WriteHeader(http.StatusOK)
+	response := ResponseModel[[]db.Task]{
+		IsSuccess: true,
+		Message:   "Tasks loading successfully.",
+		Data:      &tasks,
+	}
+	json.NewEncoder(writer).Encode(response)
 }
